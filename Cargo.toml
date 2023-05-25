@@ -1,0 +1,15 @@
+[package]
+name = "seven_seg"
+version = "0.1.0"
+edition = "2021"
+authors = ["Karl Wulfert <pic16f877.ccs@emailn.de>"]
+readme = "README.md"
+repository = "https://github.com/pic16f877ccs/seven_seg"
+homepage = "https://github.com/pic16f877ccs/seven_seg"
+license = "GPL-3.0-or-later"
+description = "Seven-segment digital display for terminal."
+keywords = ["text", "combine-text", "format"]
+categories = ["text-processing"]
+
+[dependencies]
+cattocol = { version = "0.3.1" }
