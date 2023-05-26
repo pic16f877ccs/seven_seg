@@ -86,10 +86,22 @@ pub fn sevseg_one(string: &str) -> Option<String> {
 ///                          ┗━━━┛ ┗━━━┛\n"
 /// );
 /// ```
+///
+/// ```
+/// # use seven_seg::sevseg_two;
+/// let two_digits = sevseg_two("-").unwrap();
+///
+/// assert_eq!(&two_digits, "┏━━━┓      \n\
+///                          ┃   ┃      \n\
+///                          ┃   ┃ ╺━━━╸\n\
+///                          ┃   ┃      \n\
+///                          ┗━━━┛      \n"
+/// );
+/// ```
 #[inline]
 pub fn sevseg_two(string: &str) -> Option<String> {
     let len = string.chars().count();
-    let first_digit = if len > 1 { &string[0..1] } else { "" };
+    let first_digit = if len >= 1 { &string[0..1] } else { "" };
     let second_digit = if len == 2 { &string[1..2] } else { "" };
 
     let digit: (usize, usize) = if 2 == len {
@@ -141,10 +153,23 @@ pub fn sevseg_two(string: &str) -> Option<String> {
 ///                            ┃   ┃ ┃   ┃ ┃    \n\
 ///                            ┗━━━┛ ┗━━━┛ ┗━━━╸\n"
 /// );
+/// ```
+///
+/// ```
+/// # use seven_seg::sevseg_three;
+/// let three_digits = sevseg_three("2").unwrap();
+///
+/// assert_eq!(&three_digits, "┏━━━┓ ┏━━━┓ ╺━━━┓\n\
+///                            ┃   ┃ ┃   ┃     ┃\n\
+///                            ┃   ┃ ┃   ┃ ┏━━━┛\n\
+///                            ┃   ┃ ┃   ┃ ┃    \n\
+///                            ┗━━━┛ ┗━━━┛ ┗━━━╸\n"
+/// );
+/// ```
 pub fn sevseg_three(string: &str) -> Option<String> {
     let len = string.chars().count();
-    let first_digit = if len > 1 { &string[0..1] } else { "" };
-    let second_digit = if len > 2 { &string[1..2] } else { "" };
+    let first_digit = if len >= 1 { &string[0..1] } else { "" };
+    let second_digit = if len >= 2 { &string[1..2] } else { "" };
     let third_digit = if len == 3 { &string[2..3] } else { "" };
 
     let digit: (usize, usize, usize) = if 3 == len {
@@ -226,11 +251,23 @@ pub fn sevseg_three(string: &str) -> Option<String> {
 ///                           ┗━━━┛ ┗━━━┛ ┗━━━╸ ╺━━━┛\n"
 /// );
 /// ```
+///
+/// ```
+/// # use seven_seg::sevseg_four;
+/// let four_digits = sevseg_four("023").unwrap();
+///
+/// assert_eq!(&four_digits, "┏━━━┓ ┏━━━┓ ╺━━━┓ ╺━━━┓\n\
+///                           ┃   ┃ ┃   ┃     ┃     ┃\n\
+///                           ┃   ┃ ┃   ┃ ┏━━━┛ ╺━━━┫\n\
+///                           ┃   ┃ ┃   ┃ ┃         ┃\n\
+///                           ┗━━━┛ ┗━━━┛ ┗━━━╸ ╺━━━┛\n"
+/// );
+/// ```
 pub fn sevseg_four(string: &str) -> Option<String> {
     let len = string.chars().count();
-    let first_digit = if len > 1 { &string[0..1] } else { "" };
-    let second_digit = if len > 2 { &string[1..2] } else { "" };
-    let third_digit = if len > 3 { &string[2..3] } else { "" };
+    let first_digit = if len >= 1 { &string[0..1] } else { "" };
+    let second_digit = if len >= 2 { &string[1..2] } else { "" };
+    let third_digit = if len >= 3 { &string[2..3] } else { "" };
     let fourth_digit = if len == 4 { &string[3..4] } else { "" };
 
     let digit: (usize, usize, usize, usize) = if 4 == len {
@@ -353,9 +390,9 @@ pub fn sevseg_four(string: &str) -> Option<String> {
 /// ```
 pub fn sevseg_four_iter(string: &str) -> Option<impl Iterator<Item = &str>> {
     let len = string.chars().count();
-    let first_digit = if len > 1 { &string[0..1] } else { "" };
-    let second_digit = if len > 2 { &string[1..2] } else { "" };
-    let third_digit = if len > 3 { &string[2..3] } else { "" };
+    let first_digit = if len >= 1 { &string[0..1] } else { "" };
+    let second_digit = if len >= 2 { &string[1..2] } else { "" };
+    let third_digit = if len >= 3 { &string[2..3] } else { "" };
     let fourth_digit = if len == 4 { &string[3..4] } else { "" };
 
     let digit: (usize, usize, usize, usize) = if 4 == len {
@@ -467,7 +504,11 @@ mod tests {
     fn sevseg_one_digit_zero() {
         assert_eq!(
             sevseg_one("0"),
-            Some("┏━━━┓\n┃   ┃\n┃   ┃\n┃   ┃\n┗━━━┛\n".to_string())
+            Some("┏━━━┓\n\
+                  ┃   ┃\n\
+                  ┃   ┃\n\
+                  ┃   ┃\n\
+                  ┗━━━┛\n".to_string())
         );
     }
 
@@ -515,7 +556,11 @@ mod tests {
     fn sevseg_one_digit_six() {
         assert_eq!(
             sevseg_one("6"),
-            Some("┏━━━╸\n┃    \n┣━━━┓\n┃   ┃\n┗━━━┛\n".to_string())
+            Some("┏━━━╸\n\
+                  ┃    \n\
+                  ┣━━━┓\n\
+                  ┃   ┃\n\
+                  ┗━━━┛\n".to_string())
         );
     }
 
@@ -531,7 +576,11 @@ mod tests {
     fn sevseg_one_digit_eight() {
         assert_eq!(
             sevseg_one("8"),
-            Some("┏━━━┓\n┃   ┃\n┣━━━┫\n┃   ┃\n┗━━━┛\n".to_string())
+            Some("┏━━━┓\n\
+                  ┃   ┃\n\
+                  ┣━━━┫\n\
+                  ┃   ┃\n\
+                  ┗━━━┛\n".to_string())
         );
     }
 
@@ -575,7 +624,11 @@ mod tests {
     fn sevseg_two_digit_zero() {
         assert_eq!(
             sevseg_two("00"),
-            Some("┏━━━┓ ┏━━━┓\n┃   ┃ ┃   ┃\n┃   ┃ ┃   ┃\n┃   ┃ ┃   ┃\n┗━━━┛ ┗━━━┛\n".to_string())
+            Some("┏━━━┓ ┏━━━┓\n\
+                  ┃   ┃ ┃   ┃\n\
+                  ┃   ┃ ┃   ┃\n\
+                  ┃   ┃ ┃   ┃\n\
+                  ┗━━━┛ ┗━━━┛\n".to_string())
         );
     }
 
@@ -623,7 +676,11 @@ mod tests {
     fn sevseg_two_digit_six() {
         assert_eq!(
             sevseg_two("66"),
-            Some("┏━━━╸ ┏━━━╸\n┃     ┃    \n┣━━━┓ ┣━━━┓\n┃   ┃ ┃   ┃\n┗━━━┛ ┗━━━┛\n".to_string())
+            Some("┏━━━╸ ┏━━━╸\n\
+                  ┃     ┃    \n\
+                  ┣━━━┓ ┣━━━┓\n\
+                  ┃   ┃ ┃   ┃\n\
+                  ┗━━━┛ ┗━━━┛\n".to_string())
         );
     }
 
@@ -639,7 +696,11 @@ mod tests {
     fn sevseg_two_digit_eight() {
         assert_eq!(
             sevseg_two("88"),
-            Some("┏━━━┓ ┏━━━┓\n┃   ┃ ┃   ┃\n┣━━━┫ ┣━━━┫\n┃   ┃ ┃   ┃\n┗━━━┛ ┗━━━┛\n".to_string())
+            Some("┏━━━┓ ┏━━━┓\n\
+                  ┃   ┃ ┃   ┃\n\
+                  ┣━━━┫ ┣━━━┫\n\
+                  ┃   ┃ ┃   ┃\n\
+                  ┗━━━┛ ┗━━━┛\n".to_string())
         );
     }
 
@@ -655,14 +716,24 @@ mod tests {
     fn sevseg_two_digit_eight_nine() {
         assert_eq!(
             sevseg_two("89"),
-            Some("┏━━━┓ ┏━━━┓\n┃   ┃ ┃   ┃\n┣━━━┫ ┗━━━┫\n┃   ┃     ┃\n┗━━━┛ ╺━━━┛\n".to_string())
+            Some("┏━━━┓ ┏━━━┓\n\
+                  ┃   ┃ ┃   ┃\n\
+                  ┣━━━┫ ┗━━━┫\n\
+                  ┃   ┃     ┃\n\
+                  ┗━━━┛ ╺━━━┛\n".to_string())
         );
     }
 
     #[test]
     fn sevseg_two_digit_empty_nine() {
         assert_eq!(
-            sevseg_two("9"), None);
+            sevseg_two("8"), 
+            Some("┏━━━┓ ┏━━━┓\n\
+                  ┃   ┃ ┃   ┃\n\
+                  ┃   ┃ ┣━━━┫\n\
+                  ┃   ┃ ┃   ┃\n\
+                  ┗━━━┛ ┗━━━┛\n".to_string())
+        );
     }
 
     #[test]
@@ -675,7 +746,13 @@ mod tests {
 
     #[test]
     fn sevseg_two_digit_empty_ten() {
-        assert_eq!(sevseg_two("-"), None);
+        assert_eq!(sevseg_two("-"),
+            Some("┏━━━┓      \n\
+                  ┃   ┃      \n\
+                  ┃   ┃ ╺━━━╸\n\
+                  ┃   ┃      \n\
+                  ┗━━━┛      \n".to_string())
+            );
     }
 
     #[test]
@@ -702,8 +779,11 @@ mod tests {
     fn sevseg_three_digit_zero() {
         assert_eq!(
             sevseg_three("000"),
-            Some("┏━━━┓ ┏━━━┓ ┏━━━┓\n┃   ┃ ┃   ┃ ┃   ┃\n┃   ┃ ┃   ┃ ┃   ┃\n┃   ┃ ┃   ┃ ┃   ┃\n\
-                ┗━━━┛ ┗━━━┛ ┗━━━┛\n".to_string())
+            Some("┏━━━┓ ┏━━━┓ ┏━━━┓\n\
+                  ┃   ┃ ┃   ┃ ┃   ┃\n\
+                  ┃   ┃ ┃   ┃ ┃   ┃\n\
+                  ┃   ┃ ┃   ┃ ┃   ┃\n\
+                  ┗━━━┛ ┗━━━┛ ┗━━━┛\n".to_string())
         );
     }
 
@@ -756,8 +836,11 @@ mod tests {
     fn sevseg_three_digit_six() {
         assert_eq!(
             sevseg_three("666"),
-            Some("┏━━━╸ ┏━━━╸ ┏━━━╸\n┃     ┃     ┃    \n┣━━━┓ ┣━━━┓ ┣━━━┓\n┃   ┃ ┃   ┃ ┃   ┃\n\
-                ┗━━━┛ ┗━━━┛ ┗━━━┛\n".to_string())
+            Some("┏━━━╸ ┏━━━╸ ┏━━━╸\n\
+                  ┃     ┃     ┃    \n\
+                  ┣━━━┓ ┣━━━┓ ┣━━━┓\n\
+                  ┃   ┃ ┃   ┃ ┃   ┃\n\
+                  ┗━━━┛ ┗━━━┛ ┗━━━┛\n".to_string())
         );
     }
 
@@ -774,8 +857,11 @@ mod tests {
     fn sevseg_three_digit_eight() {
         assert_eq!(
             sevseg_three("888"),
-            Some("┏━━━┓ ┏━━━┓ ┏━━━┓\n┃   ┃ ┃   ┃ ┃   ┃\n┣━━━┫ ┣━━━┫ ┣━━━┫\n┃   ┃ ┃   ┃ ┃   ┃\n\
-                ┗━━━┛ ┗━━━┛ ┗━━━┛\n".to_string())
+            Some("┏━━━┓ ┏━━━┓ ┏━━━┓\n\
+                  ┃   ┃ ┃   ┃ ┃   ┃\n\
+                  ┣━━━┫ ┣━━━┫ ┣━━━┫\n\
+                  ┃   ┃ ┃   ┃ ┃   ┃\n\
+                  ┗━━━┛ ┗━━━┛ ┗━━━┛\n".to_string())
         );
     }
 
@@ -799,17 +885,35 @@ mod tests {
 
     #[test]
     fn sevseg_three_digit_empty_ten() {
-        assert_eq!(sevseg_three("-"), None);
+        assert_eq!(sevseg_three("-"),
+            Some("┏━━━┓ ┏━━━┓      \n\
+                  ┃   ┃ ┃   ┃      \n\
+                  ┃   ┃ ┃   ┃ ╺━━━╸\n\
+                  ┃   ┃ ┃   ┃      \n\
+                  ┗━━━┛ ┗━━━┛      \n".to_string())
+            );
     }
 
     #[test]
     fn sevseg_three_digit_empty_five() {
-        assert_eq!(sevseg_three("5"), None);
+        assert_eq!(sevseg_three("5"),
+            Some("┏━━━┓ ┏━━━┓ ┏━━━╸\n\
+                  ┃   ┃ ┃   ┃ ┃    \n\
+                  ┃   ┃ ┃   ┃ ┗━━━┓\n\
+                  ┃   ┃ ┃   ┃     ┃\n\
+                  ┗━━━┛ ┗━━━┛ ╺━━━┛\n".to_string())
+            );
     }
 
     #[test]
     fn sevseg_three_digit_empty_one_two() {
-        assert_eq!(sevseg_three("12"), None);
+        assert_eq!(sevseg_three("21"),
+            Some("┏━━━┓ ╺━━━┓     ╻\n\
+                  ┃   ┃     ┃     ┃\n\
+                  ┃   ┃ ┏━━━┛     ┃\n\
+                  ┃   ┃ ┃         ┃\n\
+                  ┗━━━┛ ┗━━━╸     ╹\n".to_string())
+        );
     }
 
     #[test]
@@ -846,8 +950,11 @@ mod tests {
     fn sevseg_four_digit_zero() {
         assert_eq!(
             sevseg_four("0000"),
-            Some("┏━━━┓ ┏━━━┓ ┏━━━┓ ┏━━━┓\n┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n\
-                ┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n┗━━━┛ ┗━━━┛ ┗━━━┛ ┗━━━┛\n".to_string())
+            Some("┏━━━┓ ┏━━━┓ ┏━━━┓ ┏━━━┓\n\
+                  ┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n\
+                  ┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n\
+                  ┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n\
+                  ┗━━━┛ ┗━━━┛ ┗━━━┛ ┗━━━┛\n".to_string())
         );
     }
 
@@ -900,8 +1007,11 @@ mod tests {
     fn sevseg_four_digit_six() {
         assert_eq!(
             sevseg_four("6666"),
-            Some("┏━━━╸ ┏━━━╸ ┏━━━╸ ┏━━━╸\n┃     ┃     ┃     ┃    \n\
-                ┣━━━┓ ┣━━━┓ ┣━━━┓ ┣━━━┓\n┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n┗━━━┛ ┗━━━┛ ┗━━━┛ ┗━━━┛\n".to_string())
+            Some("┏━━━╸ ┏━━━╸ ┏━━━╸ ┏━━━╸\n\
+                  ┃     ┃     ┃     ┃    \n\
+                  ┣━━━┓ ┣━━━┓ ┣━━━┓ ┣━━━┓\n\
+                  ┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n\
+                  ┗━━━┛ ┗━━━┛ ┗━━━┛ ┗━━━┛\n".to_string())
         );
     }
 
@@ -918,8 +1028,11 @@ mod tests {
     fn sevseg_four_digit_eight() {
         assert_eq!(
             sevseg_four("8888"),
-            Some("┏━━━┓ ┏━━━┓ ┏━━━┓ ┏━━━┓\n┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n\
-                ┣━━━┫ ┣━━━┫ ┣━━━┫ ┣━━━┫\n┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n┗━━━┛ ┗━━━┛ ┗━━━┛ ┗━━━┛\n".to_string())
+            Some("┏━━━┓ ┏━━━┓ ┏━━━┓ ┏━━━┓\n\
+                  ┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n\
+                  ┣━━━┫ ┣━━━┫ ┣━━━┫ ┣━━━┫\n\
+                  ┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n\
+                  ┗━━━┛ ┗━━━┛ ┗━━━┛ ┗━━━┛\n".to_string())
         );
     }
 
@@ -943,22 +1056,46 @@ mod tests {
 
     #[test]
     fn sevseg_four_digit_empty_ten() {
-        assert_eq!(sevseg_four("-"), None);
+        assert_eq!(sevseg_four("-"),
+            Some("┏━━━┓ ┏━━━┓ ┏━━━┓      \n\
+                  ┃   ┃ ┃   ┃ ┃   ┃      \n\
+                  ┃   ┃ ┃   ┃ ┃   ┃ ╺━━━╸\n\
+                  ┃   ┃ ┃   ┃ ┃   ┃      \n\
+                  ┗━━━┛ ┗━━━┛ ┗━━━┛      \n".to_string())
+        );
     }
 
     #[test]
     fn sevseg_four_digit_empty_five() {
-        assert_eq!(sevseg_four("5"), None);
+            assert_eq!(sevseg_four("5"),
+            Some("┏━━━┓ ┏━━━┓ ┏━━━┓ ┏━━━╸\n\
+                  ┃   ┃ ┃   ┃ ┃   ┃ ┃    \n\
+                  ┃   ┃ ┃   ┃ ┃   ┃ ┗━━━┓\n\
+                  ┃   ┃ ┃   ┃ ┃   ┃     ┃\n\
+                  ┗━━━┛ ┗━━━┛ ┗━━━┛ ╺━━━┛\n".to_string())
+        );
     }
 
     #[test]
     fn sevseg_four_digit_empty_one_two() {
-        assert_eq!(sevseg_four("12"), None);
+        assert_eq!(sevseg_four("12"),
+            Some("┏━━━┓ ┏━━━┓     ╻ ╺━━━┓\n\
+                  ┃   ┃ ┃   ┃     ┃     ┃\n\
+                  ┃   ┃ ┃   ┃     ┃ ┏━━━┛\n\
+                  ┃   ┃ ┃   ┃     ┃ ┃    \n\
+                  ┗━━━┛ ┗━━━┛     ╹ ┗━━━╸\n".to_string())
+       );
     }
 
     #[test]
     fn sevseg_four_digit_empty_one_two_three() {
-        assert_eq!(sevseg_four("123"), None);
+        assert_eq!(sevseg_four("125"),
+            Some("┏━━━┓     ╻ ╺━━━┓ ┏━━━╸\n\
+                  ┃   ┃     ┃     ┃ ┃    \n\
+                  ┃   ┃     ┃ ┏━━━┛ ┗━━━┓\n\
+                  ┃   ┃     ┃ ┃         ┃\n\
+                  ┗━━━┛     ╹ ┗━━━╸ ╺━━━┛\n".to_string())
+        );
     }
 
     #[test]
@@ -991,16 +1128,15 @@ mod tests {
         assert_eq!(sevseg_four(""), None);
     }
 
-
-
-
-
     #[test]
     fn sevseg_four_iter_digit_zero() {
         assert_eq!(
             &sevseg_four_iter("0000").unwrap().collect::<String>(),
-            "┏━━━┓ ┏━━━┓ ┏━━━┓ ┏━━━┓\n┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n\
-                ┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n┗━━━┛ ┗━━━┛ ┗━━━┛ ┗━━━┛\n"
+            "┏━━━┓ ┏━━━┓ ┏━━━┓ ┏━━━┓\n\
+             ┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n\
+             ┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n\
+             ┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n\
+             ┗━━━┛ ┗━━━┛ ┗━━━┛ ┗━━━┛\n"
         );
     }
 
@@ -1053,8 +1189,11 @@ mod tests {
     fn sevseg_four_iter_digit_six() {
         assert_eq!(
             &sevseg_four_iter("6666").unwrap().collect::<String>(),
-            "┏━━━╸ ┏━━━╸ ┏━━━╸ ┏━━━╸\n┃     ┃     ┃     ┃    \n\
-                ┣━━━┓ ┣━━━┓ ┣━━━┓ ┣━━━┓\n┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n┗━━━┛ ┗━━━┛ ┗━━━┛ ┗━━━┛\n"
+            "┏━━━╸ ┏━━━╸ ┏━━━╸ ┏━━━╸\n\
+             ┃     ┃     ┃     ┃    \n\
+             ┣━━━┓ ┣━━━┓ ┣━━━┓ ┣━━━┓\n\
+             ┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n\
+             ┗━━━┛ ┗━━━┛ ┗━━━┛ ┗━━━┛\n"
         );
     }
 
@@ -1071,8 +1210,11 @@ mod tests {
     fn sevseg_four_iter_digit_eight() {
         assert_eq!(
             &sevseg_four_iter("8888").unwrap().collect::<String>(),
-            "┏━━━┓ ┏━━━┓ ┏━━━┓ ┏━━━┓\n┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n\
-                ┣━━━┫ ┣━━━┫ ┣━━━┫ ┣━━━┫\n┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n┗━━━┛ ┗━━━┛ ┗━━━┛ ┗━━━┛\n"
+            "┏━━━┓ ┏━━━┓ ┏━━━┓ ┏━━━┓\n\
+             ┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n\
+             ┣━━━┫ ┣━━━┫ ┣━━━┫ ┣━━━┫\n\
+             ┃   ┃ ┃   ┃ ┃   ┃ ┃   ┃\n\
+             ┗━━━┛ ┗━━━┛ ┗━━━┛ ┗━━━┛\n"
         );
     }
 
@@ -1096,22 +1238,46 @@ mod tests {
 
     #[test]
     fn sevseg_four_iter_digit_empty_ten() {
-        assert!(sevseg_four_iter("-").is_none());
+        assert_eq!(&sevseg_four_iter("-").unwrap().collect::<String>(),
+            "┏━━━┓ ┏━━━┓ ┏━━━┓      \n\
+             ┃   ┃ ┃   ┃ ┃   ┃      \n\
+             ┃   ┃ ┃   ┃ ┃   ┃ ╺━━━╸\n\
+             ┃   ┃ ┃   ┃ ┃   ┃      \n\
+             ┗━━━┛ ┗━━━┛ ┗━━━┛      \n"
+        );
     }
 
     #[test]
     fn sevseg_four_iter_digit_empty_five() {
-        assert!(sevseg_four_iter("5").is_none());
+        assert_eq!(&sevseg_four_iter("5").unwrap().collect::<String>(),
+            "┏━━━┓ ┏━━━┓ ┏━━━┓ ┏━━━╸\n\
+             ┃   ┃ ┃   ┃ ┃   ┃ ┃    \n\
+             ┃   ┃ ┃   ┃ ┃   ┃ ┗━━━┓\n\
+             ┃   ┃ ┃   ┃ ┃   ┃     ┃\n\
+             ┗━━━┛ ┗━━━┛ ┗━━━┛ ╺━━━┛\n"
+        );
     }
 
     #[test]
     fn sevseg_four_iter_digit_empty_one_two() {
-        assert!(sevseg_four_iter("12").is_none());
+        assert_eq!(&sevseg_four_iter("12").unwrap().collect::<String>(),
+            "┏━━━┓ ┏━━━┓     ╻ ╺━━━┓\n\
+             ┃   ┃ ┃   ┃     ┃     ┃\n\
+             ┃   ┃ ┃   ┃     ┃ ┏━━━┛\n\
+             ┃   ┃ ┃   ┃     ┃ ┃    \n\
+             ┗━━━┛ ┗━━━┛     ╹ ┗━━━╸\n"
+        );
     }
 
     #[test]
     fn sevseg_four_iter_digit_empty_one_two_three() {
-        assert!(sevseg_four_iter("123").is_none());
+        assert_eq!(&sevseg_four_iter("125").unwrap().collect::<String>(),
+            "┏━━━┓     ╻ ╺━━━┓ ┏━━━╸\n\
+             ┃   ┃     ┃     ┃ ┃    \n\
+             ┃   ┃     ┃ ┏━━━┛ ┗━━━┓\n\
+             ┃   ┃     ┃ ┃         ┃\n\
+             ┗━━━┛     ╹ ┗━━━╸ ╺━━━┛\n"
+        );
     }
 
     #[test]
