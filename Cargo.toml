@@ -1,6 +1,6 @@
 [package]
 name = "seven_seg"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 authors = ["Karl Wulfert <pic16f877.ccs@emailn.de>"]
 readme = "README.md"
@@ -11,5 +11,14 @@ description = "Seven-segment digital display for terminal."
 keywords = ["text", "combine-text", "format"]
 categories = ["text-processing"]
 
+[[examples]]
+name = "cpu_freq"
+
 [dependencies]
 cattocol = { version = "0.3.1" }
+
+
+[dev-dependencies]
+async-std = { version = "1.12.0", features = ["attributes"] }
+cpu-freq = "0.0.2"
+txtframe = { version = "0.4.0", features = ["newline", "esc"] }
