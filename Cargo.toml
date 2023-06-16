@@ -1,6 +1,6 @@
 [package]
 name = "seven_seg"
-version = "0.1.2"
+version = "0.2.0"
 edition = "2021"
 authors = ["Karl Wulfert <pic16f877.ccs@emailn.de>"]
 readme = "README.md"
@@ -15,7 +15,7 @@ categories = ["text-processing"]
 name = "cpu_freq"
 
 [dependencies]
-cattocol = { version = "0.3.1" }
+cattocol = "0.3.1"
 num = "0.4.0"
 
 

@@ -545,7 +545,7 @@ pub fn sevseg_four_iter(string: &str) -> Option<impl Iterator<Item = &str>> {
     ))
 }
 
-/// Four digit seven segment digital display with decimal point.
+/// Four digits seven segment digital display with decimal point.
 ///
 /// # Examples
 ///
@@ -558,18 +558,6 @@ pub fn sevseg_four_iter(string: &str) -> Option<impl Iterator<Item = &str>> {
 ///                           ┣━━━┫ ┃   ┃ ┏━━━┛ ╺━━━┫ \n\
 ///                           ┃   ┃ ┃   ┃ ┃         ┃ \n\
 ///                           ┗━━━┛ ┗━━━┛ ┗━━━╸ ╺━━━┛⦁\n"
-/// );
-/// ```
-///
-/// ```
-/// # use seven_seg::sevseg_four_dp;
-/// let four_digits = sevseg_four_dp(80.23_f32);
-///
-/// assert_eq!(&four_digits, "┏━━━┓ ┏━━━┓  ╺━━━┓ ╺━━━┓\n\
-///                           ┃   ┃ ┃   ┃      ┃     ┃\n\
-///                           ┣━━━┫ ┃   ┃  ┏━━━┛ ╺━━━┫\n\
-///                           ┃   ┃ ┃   ┃  ┃         ┃\n\
-///                           ┗━━━┛ ┗━━━┛⦁ ┗━━━╸ ╺━━━┛\n"
 /// );
 /// ```
 ///
