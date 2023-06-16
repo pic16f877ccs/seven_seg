@@ -16,6 +16,7 @@ name = "cpu_freq"
 
 [dependencies]
 cattocol = { version = "0.3.1" }
+num = "0.4.0"
 
 
 [dev-dependencies]
